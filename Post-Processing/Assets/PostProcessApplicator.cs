@@ -6,12 +6,16 @@ using UnityEngine;
 public class PostProcessApplicator : MonoBehaviour
 {
     [Header("FX SETTINGS")]
-    public PostProcessFX[] Effects;
     public bool ApplyFx;
+    public PostProcessFX[] Effects;
     public Texture test;
+    RenderTexture target;
+
 
     private void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
+        target = new(source.descriptor);
+        target.name = "Post-Process Applicator : Temp_Target_RenderTexture";
         if (!ApplyFx)
         {
             Graphics.Blit(source, destination);
@@ -19,17 +23,18 @@ public class PostProcessApplicator : MonoBehaviour
         }
 
         Graphics.Blit(ApplyPostProcessing(source), destination);
-    }
 
+        target.Release();
+    }
+    
     public RenderTexture ApplyPostProcessing(RenderTexture source)
     {
-        RenderTexture target = new(source.descriptor);
         Graphics.Blit(source, target);
         foreach (var fx in Effects)
         {
             if (!fx.Active)
                 continue;
-            fx.Execute(target, ref target);
+            fx.Execute(ref target);
         }
 
         return target;
@@ -44,20 +49,23 @@ public class PostProcessFX
     public bool Active;
     public Pass[] Passes;
     Material mat;
-    public void Execute(RenderTexture source, ref RenderTexture target)
+    RenderTexture temp;
+
+    public void Execute(ref RenderTexture target)
     {
         mat = new(shader);
-        RenderTexture temp = new(source.descriptor);
-        Graphics.Blit(source, temp);
-
+        temp = new(target.descriptor);
+        temp.name = $"Post-Process Applicator : {Name}_FX_Temp_RenderTexture";
         foreach (var pass in Passes)
         {
             if (!pass.Active)
                 continue;
 
-            Graphics.Blit(temp, target, mat, pass.PassIndex);
-            Graphics.Blit(target, temp);
+            Graphics.Blit(target, temp, mat, pass.PassIndex);
+            Graphics.Blit(temp, target);
         }
+        temp.Release();
+        //UnityEngine.MonoBehaviour.DestroyImmediate(mat);
     }
 }
 

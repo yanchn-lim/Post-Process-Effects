@@ -474,25 +474,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9407c0538e3907d439cf808f7d264863, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ApplyFx: 1
   Effects:
   - Name: Greyscale
     shader: {fileID: 4800000, guid: 465bb63dbb0fa244ca564d053e4dce3d, type: 3}
-    Active: 0
+    Active: 1
     Passes:
-    - Name: Greyscale
+    - Name: 1
       PassIndex: 0
       Active: 1
   - Name: Invert
     shader: {fileID: 4800000, guid: e4bca2813a7afef469fbced8c4b42ab6, type: 3}
     Active: 1
     Passes:
-    - Name: Invert
+    - Name: 1
       PassIndex: 0
       Active: 1
-    - Name: Invert2
+    - Name: 1
       PassIndex: 1
       Active: 1
-  ApplyFx: 1
   test: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!1 &2013082841
 GameObject:
