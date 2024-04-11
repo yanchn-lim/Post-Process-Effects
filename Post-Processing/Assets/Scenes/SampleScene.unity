@@ -358,6 +358,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Image_Camera
   m_TagString: MainCamera
@@ -460,13 +461,39 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1336f56ad5325ea44975e6d18e622219, type: 3}
   - {fileID: 2800000, guid: ab220d497db6a6e4eb75b64f61c9bc66, type: 3}
   - {fileID: 2800000, guid: ddd48757c3f8c404786ec4ba01b74b31, type: 3}
-  ShowImage: 0
+  ShowImage: 1
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9407c0538e3907d439cf808f7d264863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   Effects:
-  - shader: {fileID: 0}
+  - Name: Greyscale
+    shader: {fileID: 4800000, guid: 465bb63dbb0fa244ca564d053e4dce3d, type: 3}
+    Active: 0
     Passes:
-    - Name: 
+    - Name: Greyscale
       PassIndex: 0
-      Active: 0
+      Active: 1
+  - Name: Invert
+    shader: {fileID: 4800000, guid: e4bca2813a7afef469fbced8c4b42ab6, type: 3}
+    Active: 1
+    Passes:
+    - Name: Invert
+      PassIndex: 0
+      Active: 1
+    - Name: Invert2
+      PassIndex: 1
+      Active: 1
+  ApplyFx: 1
+  test: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!1 &2013082841
 GameObject:
   m_ObjectHideFlags: 0
