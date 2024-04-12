@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Mathematics;
+using static UnityEngine.GraphicsBuffer;
 
 [ExecuteInEditMode]
 public class PostProcessApplicator : MonoBehaviour
 {
     [Header("FX SETTINGS")]
     public bool ApplyFx;
-    public PostProcessFX[] Effects;
-    public Texture test;
+    PostProcessFX[] effects;
     RenderTexture target;
 
 
@@ -29,8 +30,9 @@ public class PostProcessApplicator : MonoBehaviour
     
     public RenderTexture ApplyPostProcessing(RenderTexture source)
     {
+        effects = GameObject.Find("PostProcessFX").GetComponentsInChildren<PostProcessFX>();
         Graphics.Blit(source, target);
-        foreach (var fx in Effects)
+        foreach (var fx in effects)
         {
             if (!fx.Active)
                 continue;
@@ -39,40 +41,4 @@ public class PostProcessApplicator : MonoBehaviour
 
         return target;
     }
-}
-
-[System.Serializable]
-public class PostProcessFX
-{
-    public string Name;
-    public Shader shader;
-    public bool Active;
-    public Pass[] Passes;
-    Material mat;
-    RenderTexture temp;
-
-    public void Execute(ref RenderTexture target)
-    {
-        mat = new(shader);
-        temp = new(target.descriptor);
-        temp.name = $"Post-Process Applicator : {Name}_FX_Temp_RenderTexture";
-        foreach (var pass in Passes)
-        {
-            if (!pass.Active)
-                continue;
-
-            Graphics.Blit(target, temp, mat, pass.PassIndex);
-            Graphics.Blit(temp, target);
-        }
-        temp.Release();
-        //UnityEngine.MonoBehaviour.DestroyImmediate(mat);
-    }
-}
-
-[System.Serializable]
-public struct Pass
-{
-    public string Name;
-    public int PassIndex;
-    public bool Active;
 }

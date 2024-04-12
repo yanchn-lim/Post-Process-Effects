@@ -3,7 +3,9 @@ Shader "Hidden/TestShaders"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _TestArg_1("Test Arg",Float) = 1
     }
+
     SubShader
     {
 
@@ -24,6 +26,8 @@ Shader "Hidden/TestShaders"
             float2 uv : TEXCOORD0;
             float4 vertex : SV_POSITION;
         };
+
+        float _TestArg_1;
         ENDCG
 
         Pass
@@ -43,6 +47,7 @@ Shader "Hidden/TestShaders"
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
                 col = 1 - col;
+                col *= _TestArg_1;
                 return col;
             }
             ENDCG
