@@ -115,7 +115,7 @@ Shader "Hidden/UnsharpMask"
                 float4 blur = tex2D(_MainTex,i.uv);
                 float4 col = tex2D(_originalTexture,i.uv);
 
-                return ((1 + _w) * col) - (_w * blur);
+                return saturate(((1 + _w) * col) - (_w * blur));
             }
             ENDCG
         }

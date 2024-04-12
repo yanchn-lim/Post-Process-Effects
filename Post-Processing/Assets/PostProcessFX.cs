@@ -13,6 +13,12 @@ public class PostProcessFX : MonoBehaviour
     protected Material mat;
     protected RenderTexture temp;
 
+    private void OnEnable()
+    {
+        Name = shader.name.Remove(0, 7);
+        mat = new(shader);
+    }
+
     protected void RunPasses(ref RenderTexture target)
     {
         foreach (var pass in Passes)
@@ -29,10 +35,8 @@ public class PostProcessFX : MonoBehaviour
 
     protected void Initialize(ref RenderTexture target)
     {
-        mat = new(shader);
         temp = new(target.descriptor);
         temp.name = $"Post-Process Applicator : {Name}_FX_Temp_RenderTexture";
-        Name = shader.name.Remove(0,7);
     }
 
     public virtual void ApplyShaderArguments()

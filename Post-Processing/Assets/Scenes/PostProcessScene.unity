@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,58 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &388110742
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 388110743}
+  - component: {fileID: 388110744}
+  m_Layer: 0
+  m_Name: LaplacianFilter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &388110743
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388110742}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2117294867}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &388110744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388110742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c1a41d10472f064dbff2186b79febfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: LaplacianFilter
+  shader: {fileID: 4800000, guid: 69090ee689d2a9c478e69a7b9343c5b4, type: 3}
+  Active: 1
+  Passes:
+  - Name: Convolution
+    PassIndex: 0
+    Active: 1
+  Sharpness: 0.48
 --- !u!1 &612934065
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,6 +449,65 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ApplyFx: 1
+--- !u!1 &1172122278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1172122279}
+  - component: {fileID: 1172122280}
+  m_Layer: 0
+  m_Name: ColourCorrection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1172122279
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172122278}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2117294867}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1172122280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172122278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e00f72556b9aec143aaa5b5c40f7dcfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: ColourCorrection
+  shader: {fileID: 4800000, guid: 2666a2ee0dcc9a843b53db413518db2e, type: 3}
+  Active: 1
+  Passes:
+  - Name: ColourCorrectionPass
+    PassIndex: 0
+    Active: 1
+  Exposure: 0.72
+  Temperature: 0
+  Tint: 0
+  Contrast: 1.23
+  Brightness: 0.27
+  ColourFilter: {r: 1, g: 1, b: 1, a: 0}
+  Saturation: 1.3
+  Gamma: 1.37
 --- !u!1 &1374531431
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,8 +565,8 @@ MonoBehaviour:
   - Name: UnsharpMaskPass
     PassIndex: 2
     Active: 1
-  Radius: 21.2
-  Sharpness: 0.92
+  Radius: 1
+  Sharpness: 1.33
 --- !u!1 &1839075089
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,9 +681,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 612934067}
   - {fileID: 1839075090}
+  - {fileID: 1172122279}
+  - {fileID: 612934067}
   - {fileID: 1374531432}
+  - {fileID: 388110743}
   m_Father: {fileID: 2013082842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807

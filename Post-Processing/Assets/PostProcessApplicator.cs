@@ -11,12 +11,13 @@ public class PostProcessApplicator : MonoBehaviour
     public bool ApplyFx;
     PostProcessFX[] effects;
     RenderTexture target;
-
+    
 
     private void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
         target = new(source.descriptor);
         target.name = "Post-Process Applicator : Temp_Target_RenderTexture";
+        target.format = RenderTextureFormat.ARGBHalf;
         if (!ApplyFx)
         {
             Graphics.Blit(source, destination);
