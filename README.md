@@ -2,7 +2,7 @@
 This is a collection of post-processing effects that I have learnt about and tried to implement into unity's built-in render pipeline.
 
 ## Disclaimer
-Only meant to be used as a reference to how the effect is done!
+Only meant to be used as a reference to know how the effect is done!
 </br>Effects are meant to be condensed into a single pass to maximize performance.
 
 ## Current Features
