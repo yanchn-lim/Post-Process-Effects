@@ -13,6 +13,6 @@ This is a collection of post-processing effects that I have learnt about and tri
     - Gamma
 
  ## Examples
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="/images">
- </picture>
+ ### Original
+ ![DSC06798](https://github.com/yanchn-lim/Post-Process-Effects/assets/105861890/98ee41e6-38ce-4298-be1f-56e34db735dc)
+
