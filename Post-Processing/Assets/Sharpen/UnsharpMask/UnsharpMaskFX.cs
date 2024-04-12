@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UnsharpMaskFX : PostProcessFX
 {
+    [Header("FX Settings")]
     public float Radius;
     public float Sharpness;
     RenderTexture originalTexture;
