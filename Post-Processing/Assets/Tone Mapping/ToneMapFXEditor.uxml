@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Label tabindex="-1" text="Post-process Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" style="opacity: 1; -unity-font-style: bold;" />
+    <ui:EnumField label="ToneMapper" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" value="Center" binding-path="ToneMapper" />
+</ui:UXML>

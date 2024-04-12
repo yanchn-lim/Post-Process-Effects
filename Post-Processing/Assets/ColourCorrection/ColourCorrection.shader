@@ -3,14 +3,7 @@ Shader "Hidden/ColourCorrection"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Contrast ("Contrast",Float) = 0
-        _Brightness ("Brightness",Float) = 0
-        _Saturation ("Saturation",Float) = 0
-        _Gamma ("Gamma",Float) = 0
-        _Exposure("Exposure",Float) = 0
-        _Temperature("Temperature",Float) = 0
-        _Tint("Tint",Float) = 0
-        _ColourFilter("ColourFilter",Color) = (0,0,0,0)
+
     }
     SubShader
     {
@@ -100,23 +93,29 @@ Shader "Hidden/ColourCorrection"
                 float3 col = c.rgb;
 
                 //exposure
-                col = saturate(col * _Exposure);
+                col *= _Exposure;
+                col = max(0.0f,col);
 
                 //temperature
-                col = saturate(WhiteBalance(col,_Temperature,_Tint));
+                col = WhiteBalance(col,_Temperature,_Tint);
+                col = max(0.0f,col);
 
                 //contrast + brightness
-                col = saturate(_Contrast * (col-0.5) + 0.5 + _Brightness);
+                col = _Contrast * (col-0.5) + 0.5 + _Brightness;
+                col = max(0.0f,col);
 
                 //colour filtering
-                col = saturate(col * _ColourFilter);
+                col *= _ColourFilter;
+                col = max(0.0f,col);
 
                 //saturation
                 float gs = dot(col,float4(0.299,0.587,0.114,0));
-                col = saturate(lerp(gs,col,_Saturation));
+                col = lerp(gs,col,_Saturation);
+                col = max(0.0f,col);
 
                 //gamma
-                col = saturate(pow(col,_Gamma));
+                col = pow(col,_Gamma);
+                col = max(0.0f,col);
 
                 return fixed4(col,c.a);
             }

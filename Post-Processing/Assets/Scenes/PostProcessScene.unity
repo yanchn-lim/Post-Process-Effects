@@ -169,7 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: LaplacianFilter
   shader: {fileID: 4800000, guid: 69090ee689d2a9c478e69a7b9343c5b4, type: 3}
-  Active: 1
+  Active: 0
   Passes:
   - Name: Convolution
     PassIndex: 0
@@ -500,7 +500,7 @@ MonoBehaviour:
   - Name: ColourCorrectionPass
     PassIndex: 0
     Active: 1
-  Exposure: 0.72
+  Exposure: 0.88
   Temperature: 0
   Tint: 0
   Contrast: 1.23
@@ -566,7 +566,60 @@ MonoBehaviour:
     PassIndex: 2
     Active: 1
   Radius: 1
-  Sharpness: 1.33
+  Sharpness: 1.64
+--- !u!1 &1569366552
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1569366553}
+  - component: {fileID: 1569366554}
+  m_Layer: 0
+  m_Name: ToneMapping
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1569366553
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569366552}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2117294867}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1569366554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569366552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ffdae13b85e0b47a87f8c261f65c58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: ToneMapping
+  shader: {fileID: 4800000, guid: 24477a9c1f5789548a186c184b8c0b39, type: 3}
+  Active: 1
+  Passes:
+  - Name: ToneMapPass
+    PassIndex: 2
+    Active: 1
+  ToneMapper: 2
+  Cwhite: 1.33
 --- !u!1 &1839075089
 GameObject:
   m_ObjectHideFlags: 0
@@ -686,6 +739,7 @@ Transform:
   - {fileID: 612934067}
   - {fileID: 1374531432}
   - {fileID: 388110743}
+  - {fileID: 1569366553}
   m_Father: {fileID: 2013082842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807

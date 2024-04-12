@@ -19,7 +19,7 @@ public class PostProcessFX : MonoBehaviour
         mat = new(shader);
     }
 
-    protected void RunPasses(ref RenderTexture target)
+    protected virtual void RunPasses(ref RenderTexture target)
     {
         foreach (var pass in Passes)
         {
@@ -33,7 +33,7 @@ public class PostProcessFX : MonoBehaviour
         //UnityEngine.MonoBehaviour.DestroyImmediate(mat);
     }
 
-    protected void Initialize(ref RenderTexture target)
+    protected virtual void Initialize(ref RenderTexture target)
     {
         temp = new(target.descriptor);
         temp.name = $"Post-Process Applicator : {Name}_FX_Temp_RenderTexture";

@@ -3,10 +3,6 @@ Shader "Hidden/UnsharpMask"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _originalTexture("OGTexture",2D) = "white"{}
-        _MainTex_TexelSize ("Texel Size",Vector) = (0,0,0,0)
-        _sigma ("Sigma",Float) = 0
-        _w ("W", Float) = 0
     }
     SubShader
     {

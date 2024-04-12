@@ -3,8 +3,6 @@ Shader "Hidden/LaplacianFilter"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _MainTex_TexelSize("Texel Size",Vector) = (0,0,0,0)
-        _Sharpness ("Sharpness",Float) = 0
     }
     SubShader
     {
