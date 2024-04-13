@@ -37,10 +37,6 @@ Shader "Hidden/ToneMapping"
         }
 
         sampler2D _MainTex,_LuminanceTex;
-        float _b;
-        
-
-
 
         ENDCG
 
@@ -118,7 +114,7 @@ Shader "Hidden/ToneMapping"
             float _A,_B,_C,_D,_E,_F,_W;
 
             float3 uncharted2Tonemap(float3 x){
-                return ((x*(_A * x + _C * _B) + _D * _E) / (x * (_A * x + _B) + _D * _E)) - _E / _F;
+                return ((x*(_A * x + _C * _B) + _D * _E) / (x * (_A * x + _B) + _D * _F)) - _E / _F;
             }
 
             fixed4 frag (v2f i) : SV_Target
@@ -132,6 +128,58 @@ Shader "Hidden/ToneMapping"
                 float3 Cout = curr * whiteScale;
 
                 return float4(saturate(Cout),1.0f);
+            }
+               
+            ENDCG
+        }
+
+        Pass
+        {
+            Name "Narkowicz ACES Pass"
+            CGPROGRAM
+
+            float KACES_A,KACES_B,KACES_C,KACES_D,KACES_E;
+
+            float3 NarkowiczACES(float3 x){
+                return saturate((x * (KACES_A * x + KACES_B)) / (x * (KACES_C * x + KACES_D) + KACES_E));
+            }
+
+            fixed4 frag (v2f i) : SV_Target
+            {
+                fixed4 col = tex2D(_MainTex, i.uv);
+
+                return float4(NarkowiczACES(col),1.0f);
+            }
+               
+            ENDCG
+        }
+
+        Pass
+        {
+            Name "Tumblin Rushmeier Pass"
+            CGPROGRAM
+
+            float _Ldmax,_Cmax;
+
+            fixed4 frag (v2f i) : SV_Target
+            {
+                fixed4 col = tex2D(_MainTex, i.uv);
+                float Lin = luminance(col);
+
+                float Lavg = tex2Dlod(_LuminanceTex, float4(i.uv.x, i.uv.y, 0, 10.0f)).r;
+
+                float logLrw = log10(Lavg) + 0.84;
+                float alphaRw = 0.4 * logLrw + 2.92;
+                float betaRw = -0.4 * logLrw * logLrw - 2.584 * logLrw + 2.0208;
+                float Lwd = _Ldmax / sqrt(_Cmax);
+                float logLd = log10(Lwd) + 0.84;
+                float alphaD = 0.4 * logLd + 2.92;
+                float betaD = -0.4 * logLd * logLd - 2.584 * logLd + 2.0208;
+                float Lout = pow(Lin, alphaRw / alphaD) / _Ldmax * pow(10.0, (betaRw - betaD) / alphaD) - (1.0 / _Cmax);
+
+                float3 Cout = col / Lin * Lout;
+
+                return fixed4(saturate(Cout), 1.0f);
             }
                
             ENDCG
