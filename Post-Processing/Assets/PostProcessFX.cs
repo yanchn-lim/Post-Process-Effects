@@ -15,8 +15,11 @@ public class PostProcessFX : MonoBehaviour
 
     private void OnEnable()
     {
-        Name = shader.name.Remove(0, 7);
-        mat = new(shader);
+        if(shader != null)
+        {
+            Name = shader.name.Remove(0, 7);
+            mat = new(shader);
+        }
     }
 
     protected virtual void RunPasses(ref RenderTexture target)
