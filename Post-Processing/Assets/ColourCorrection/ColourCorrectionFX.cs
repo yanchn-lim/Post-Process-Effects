@@ -18,8 +18,6 @@ public class ColourCorrectionFX : PostProcessFX
     public Color ColourFilter;
     [Range(0,5f)]
     public float Saturation = 1;
-    [Range(0,5f)]
-    public float Gamma = 1;
 
     public override void ApplyShaderArguments()
     {
@@ -27,7 +25,6 @@ public class ColourCorrectionFX : PostProcessFX
         mat.SetFloat("_Contrast",Contrast);
         mat.SetFloat("_Brightness", Brightness);
         mat.SetFloat("_Saturation", Saturation);
-        mat.SetFloat("_Gamma", Gamma);
         mat.SetFloat("_Temperature", Temperature/100f);
         mat.SetFloat("_Tint", Tint/100f);
         mat.SetColor("_ColourFilter", ColourFilter);

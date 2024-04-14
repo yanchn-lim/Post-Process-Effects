@@ -39,7 +39,6 @@ Shader "Hidden/ColourCorrection"
             float _Contrast;
             float _Brightness;
             float _Saturation;
-            float _Gamma;
             float _Exposure;
             float _Temperature;
             float _Tint;
@@ -113,9 +112,9 @@ Shader "Hidden/ColourCorrection"
                 col = lerp(gs,col,_Saturation);
                 col = max(0.0f,col);
 
-                //gamma
-                col = pow(col,_Gamma);
-                col = max(0.0f,col);
+                // //gamma
+                // col = pow(col,_Gamma);
+                // col = max(0.0f,col);
 
                 return fixed4(col,c.a);
             }

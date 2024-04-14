@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -559,7 +559,58 @@ MonoBehaviour:
   Brightness: -0.29
   ColourFilter: {r: 1, g: 1, b: 1, a: 0}
   Saturation: 1.14
-  Gamma: 1.49
+--- !u!1 &1284231624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1284231625}
+  - component: {fileID: 1284231626}
+  m_Layer: 0
+  m_Name: Gamma
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1284231625
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284231624}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2117294867}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1284231626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284231624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b31fbb78a0aea0b48ac70b0080f2a59a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: GammaCorrection
+  shader: {fileID: 4800000, guid: 3dfc7214b8707914789e2facf1619ea5, type: 3}
+  Active: 1
+  Passes:
+  - Name: Gamma
+    PassIndex: 0
+    Active: 1
+  Gamma: 1.31
 --- !u!1 &1307216540
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,7 +657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Pixelize
   shader: {fileID: 0}
-  Active: 1
+  Active: 0
   Passes: []
   Power: 17
   AspectRatio: {x: 16, y: 9}
@@ -718,9 +769,9 @@ MonoBehaviour:
   Active: 1
   Passes:
   - Name: ToneMapPass
-    PassIndex: 10
+    PassIndex: 9
     Active: 1
-  ToneMapper: 10
+  ToneMapper: 9
   Cwhite: 0.92
   ViewLuminance: 0
   _A: 0.15
@@ -868,6 +919,7 @@ Transform:
   - {fileID: 612934067}
   - {fileID: 1307216541}
   - {fileID: 1569366553}
+  - {fileID: 1284231625}
   m_Father: {fileID: 2013082842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
