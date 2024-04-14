@@ -19,6 +19,7 @@ Only meant to be used as a reference to know how the effect is done!
     - Colour Filter
     - Saturation
     - Gamma
+- Tonemapping
 
  ## Examples
  ### Original
