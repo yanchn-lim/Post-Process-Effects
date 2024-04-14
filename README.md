@@ -8,11 +8,15 @@ Only meant to be used as a reference to know how the effect is done!
 ## Current Features
 - Greyscale
 - Sharpness
-  - Sharpen Convolution
+  - Laplacian Filter
   - Unsharp Mask
 - Colour Correction
+    - Exposure
+    - Temperature
+    - Tint
     - Contrast
     - Brightness
+    - Colour Filter
     - Saturation
     - Gamma
 
