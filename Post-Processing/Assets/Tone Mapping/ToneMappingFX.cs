@@ -10,6 +10,7 @@ public class ToneMappingFX : PostProcessFX
     public ToneMappers ToneMapper;
     public float Cwhite;
     RenderTexture luminanceTexture;
+    public bool ViewLuminance;
 
     public float _A = 0.15f;
     public float _B = 0.5f;
@@ -27,6 +28,18 @@ public class ToneMappingFX : PostProcessFX
 
     public float Tumblin_Ldmax;
     public float Tumblin_Cmax;
+
+    public float Schlick_P;
+    public float Schlick_HiVal;
+
+    public float Uchimura_M = 1;
+    public float Uchimura_a = 1;
+    public float Uchimura_m = 0.22f;
+    public float Uchimura_l = 0.4f;
+    public float Uchimura_c = 2.07f;
+    public float Uchimura_b = 0f;
+
+    public float Ward_Ldmax;
 
     public override void ApplyShaderArguments()
     {
@@ -50,19 +63,38 @@ public class ToneMappingFX : PostProcessFX
         mat.SetFloat("_Ldmax", Tumblin_Ldmax);
         mat.SetFloat("_Cmax", Tumblin_Cmax);
 
+        mat.SetFloat("_P", Schlick_P);
+        mat.SetFloat("_HiValue", Schlick_HiVal);
+
+        mat.SetFloat("_M", Uchimura_M);
+        mat.SetFloat("_a", Uchimura_a);
+        mat.SetFloat("_m", Uchimura_m);
+        mat.SetFloat("_l", Uchimura_l);
+        mat.SetFloat("_c", Uchimura_c);
+        mat.SetFloat("_b", Uchimura_b);
+
+        mat.SetFloat("_ward_Ldmax", Ward_Ldmax);
+
     }
 
     public override void Execute(ref RenderTexture target)
     {
         Initialize(ref target);
-        luminanceTexture = new(target.descriptor);
+        luminanceTexture = new(target.width,target.height,0, RenderTextureFormat.RHalf,RenderTextureReadWrite.Linear);
         luminanceTexture.name = $"Post-Process Applicator : {Name}_FX_Luminance_RenderTexture";
+        luminanceTexture.useMipMap = true;
         ApplyShaderArguments();
 
         //retrive luminance texture
         Graphics.Blit(target,luminanceTexture,mat,0);
         mat.SetTexture("_LuminanceTex", luminanceTexture);
         RunPasses(ref target);
+
+        if (ViewLuminance)
+        {
+            Graphics.Blit(luminanceTexture, target);
+        }
+
         luminanceTexture.Release();
     }
 
@@ -74,5 +106,9 @@ public enum ToneMappers
     REINHARD_EXTENDED,
     HABLE,
     NARKOWICZ_ACES,
-    TUMBLIN_RUSHMEIER
+    HILL_ACES,
+    TUMBLIN_RUSHMEIER,
+    SCHLICK,
+    USHIMURA,
+    WARD,
 }

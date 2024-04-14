@@ -206,7 +206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Greyscale
   shader: {fileID: 4800000, guid: 465bb63dbb0fa244ca564d053e4dce3d, type: 3}
-  Active: 0
+  Active: 1
   Passes:
   - Name: grey
     PassIndex: 0
@@ -387,13 +387,13 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 0
-  m_AllowMSAA: 0
+  m_HDR: 1
+  m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 0
@@ -495,19 +495,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: ColourCorrection
   shader: {fileID: 4800000, guid: 2666a2ee0dcc9a843b53db413518db2e, type: 3}
-  Active: 0
+  Active: 1
   Passes:
   - Name: ColourCorrectionPass
     PassIndex: 0
     Active: 1
-  Exposure: 2.81
+  Exposure: 8.29
   Temperature: 0
   Tint: 0
-  Contrast: 0.5
-  Brightness: -0.02
+  Contrast: 0.1
+  Brightness: -0.29
   ColourFilter: {r: 1, g: 1, b: 1, a: 0}
-  Saturation: 1
-  Gamma: 1.82
+  Saturation: 1.14
+  Gamma: 1.49
 --- !u!1 &1374531431
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,13 +613,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: ToneMapping
   shader: {fileID: 4800000, guid: 24477a9c1f5789548a186c184b8c0b39, type: 3}
-  Active: 1
+  Active: 0
   Passes:
   - Name: ToneMapPass
-    PassIndex: 5
+    PassIndex: 10
     Active: 1
-  ToneMapper: 5
-  Cwhite: 1.92
+  ToneMapper: 10
+  Cwhite: 0.92
+  ViewLuminance: 0
   _A: 0.15
   _B: 0.5
   _C: 0.1
@@ -632,6 +633,17 @@ MonoBehaviour:
   Nark_C: 2.43
   Nark_D: 0.59
   Nark_E: 0.14
+  Tumblin_Ldmax: 0.946
+  Tumblin_Cmax: 100
+  Schlick_P: 50.7
+  Schlick_HiVal: 78.1
+  Uchimura_M: 1
+  Uchimura_a: 1
+  Uchimura_m: 0.22
+  Uchimura_l: 0.4
+  Uchimura_c: 2.07
+  Uchimura_b: 0
+  Ward_Ldmax: 1.21
 --- !u!1 &1839075089
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,10 +759,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1839075090}
-  - {fileID: 1172122279}
-  - {fileID: 612934067}
   - {fileID: 1374531432}
   - {fileID: 388110743}
+  - {fileID: 1172122279}
+  - {fileID: 612934067}
   - {fileID: 1569366553}
   m_Father: {fileID: 2013082842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

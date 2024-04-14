@@ -15,18 +15,21 @@ public class PostProcessApplicator : MonoBehaviour
 
     private void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
-        target = new(source.descriptor);
-        target.name = "Post-Process Applicator : Temp_Target_RenderTexture";
-        target.format = RenderTextureFormat.ARGBHalf;
+        if(target == null)
+        {
+            target = new(source.descriptor);
+            target.name = "Post-Process Applicator : Temp_Target_RenderTexture";
+            target.format = RenderTextureFormat.ARGBHalf;
+        }
+        
         if (!ApplyFx)
         {
             Graphics.Blit(source, destination);
             return;
         }
-
         Graphics.Blit(ApplyPostProcessing(source), destination);
 
-        target.Release();
+        //target.Release();
     }
     
     public RenderTexture ApplyPostProcessing(RenderTexture source)

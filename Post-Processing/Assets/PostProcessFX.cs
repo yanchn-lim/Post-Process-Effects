@@ -29,14 +29,17 @@ public class PostProcessFX : MonoBehaviour
             Graphics.Blit(target, temp, mat, pass.PassIndex);
             Graphics.Blit(temp, target);
         }
-        temp.Release();
+        //temp.Release();
         //UnityEngine.MonoBehaviour.DestroyImmediate(mat);
     }
 
     protected virtual void Initialize(ref RenderTexture target)
     {
-        temp = new(target.descriptor);
-        temp.name = $"Post-Process Applicator : {Name}_FX_Temp_RenderTexture";
+        if(temp == null)
+        {
+            temp = new(target.descriptor);
+            temp.name = $"Post-Process Applicator : {Name}_FX_Temp_RenderTexture";
+        }
     }
 
     public virtual void ApplyShaderArguments()

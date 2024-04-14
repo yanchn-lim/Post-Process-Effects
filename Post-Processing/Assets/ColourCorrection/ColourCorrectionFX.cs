@@ -5,7 +5,7 @@ using UnityEngine;
 public class ColourCorrectionFX : PostProcessFX
 {
     [Header("FX Settings")]
-    [Range(0,5f)]
+    [Range(0,10f)]
     public float Exposure = 1;
     [Range(-100f,100f)]
     public float Temperature;

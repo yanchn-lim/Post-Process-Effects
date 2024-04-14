@@ -156,6 +156,46 @@ Shader "Hidden/ToneMapping"
 
         Pass
         {
+            Name "Hill ACES Pass"
+            CGPROGRAM
+
+            static const float3x3 ACESInputMat =
+            {
+                {0.59719, 0.35458, 0.04823},
+                {0.07600, 0.90834, 0.01566},
+                {0.02840, 0.13383, 0.83777}
+            };
+
+            static const float3x3 ACESOutputMat =
+            {
+                { 1.60475, -0.53108, -0.07367},
+                {-0.10208,  1.10813, -0.00605},
+                {-0.00327, -0.07276,  1.07602}
+            };
+
+            float3 RRTAndODTFit(float3 v) {
+                float3 a = v * (v + 0.0245786f) - 0.000090537f;
+                float3 b = v * (0.983729f * v + 0.4329510f) + 0.238081f;
+                return a / b;
+            }
+
+            fixed4 frag (v2f i) : SV_Target
+            {
+                float3 col = tex2D(_MainTex, i.uv).rgb;
+                col = mul(ACESInputMat, col);
+
+                col = RRTAndODTFit(col);
+
+                float3 Cout = mul(ACESOutputMat, col);
+
+                return float4(saturate(Cout),1.0f);
+            }
+               
+            ENDCG
+        }
+
+        Pass
+        {
             Name "Tumblin Rushmeier Pass"
             CGPROGRAM
 
@@ -163,7 +203,7 @@ Shader "Hidden/ToneMapping"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col = tex2D(_MainTex, i.uv);
+                float3 col = tex2D(_MainTex, i.uv).rgb;
                 float Lin = luminance(col);
 
                 float Lavg = tex2Dlod(_LuminanceTex, float4(i.uv.x, i.uv.y, 0, 10.0f)).r;
@@ -179,9 +219,95 @@ Shader "Hidden/ToneMapping"
 
                 float3 Cout = col / Lin * Lout;
 
+                return fixed4(Cout, 1.0f);
+            }
+               
+            ENDCG
+        }
+
+        Pass
+        {
+            Name "Schlick Pass"
+            CGPROGRAM
+
+            float _P,_HiValue;
+
+            fixed4 frag (v2f i) : SV_Target
+            {
+                float3 col = tex2D(_MainTex, i.uv).rgb;
+                float Lin = luminance(col);
+
+                float p = _P * Lin;
+
+                float3 Lout = p / (p - Lin + _HiValue) ;
+
+                float3 Cout = col /  Lin * Lout;
+
                 return fixed4(saturate(Cout), 1.0f);
             }
                
+            ENDCG
+        }
+
+        Pass
+        {
+            Name "Uchimura Pass"
+            CGPROGRAM
+
+            float _M,_a,_m,_l,_c,_b;
+
+            fixed4 frag (v2f i) : SV_Target
+            {
+                float3 col = tex2D(_MainTex, i.uv).rgb;
+            
+
+                float l0 = ((_M - _m) * _l) / _a;
+                float S0 = _m + l0;
+                float S1 = _m + _a * l0;
+                float C2 = (_a * _M) / (_M - S1);
+                float CP = -C2 / _M;
+
+                float3 w0 = 1.0f - smoothstep(float3(0.0f, 0.0f, 0.0f), float3(_m, _m, _m), col);
+                float3 w2 = step(float3(_m + l0, _m + l0, _m + l0), col);
+                float3 w1 = float3(1.0f, 1.0f, 1.0f) - w0 - w2;
+
+                float3 T = _m * pow(col / _m, _c) + _b;
+                float3 L = _m + _a * (col - _m);
+                float3 S = _M - (_M - S1) * exp(CP * (col - S0));
+
+                float3 Cout = T * w0 + L * w1 + S * w2;
+                
+                return float4(saturate(Cout), 1.0f);
+
+                return fixed4(saturate(Cout), 1.0f);
+            }
+               
+            ENDCG
+        }
+
+        Pass 
+        {
+
+            Name "Ward Pass"
+            CGPROGRAM
+
+            float _ward_Ldmax;
+
+            fixed4 frag (v2f i) : SV_Target 
+            {
+                float3 col = tex2D(_MainTex, i.uv).rgb;
+
+                float Lin = luminance(col);
+
+                float m = (1.219f + pow(_ward_Ldmax / 2.0f, 0.4f)) / (1.219f + pow(Lin, 0.4f));
+                m = pow(m, 2.5f); 
+
+                float Lout = m / _ward_Ldmax * Lin;
+
+                float3 Cout = col / Lin * Lout;
+
+                return float4(saturate(Cout), 1.0f);
+            }
             ENDCG
         }
 
